@@ -4,7 +4,7 @@ Extension to be used in .Net core projects using Xabaril/AspNetCore.Diagnostics.
 >Please visit the project at Xabaril/AspNetCore.Diagnostics.HealthChecks
 
 more info at:
-<a href="https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks/blob/master/README.md"> Xabaril/AspNetCore.Diagnostics.HealthChecks</a>
+[AspNetCore.Diagnostics.HealthChecks](https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks/blob/master/README.md)
 
 >NUGET INSTALL
 ``` PowerShell
