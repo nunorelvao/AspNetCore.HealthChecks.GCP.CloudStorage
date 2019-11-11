@@ -19,6 +19,8 @@ More information on the parent project at:
     <Company>Nuno Relvao</Company>
     <Product>AspNetCore.HealthChecks.GCP.CloudStorage</Product>
     <PackageReleaseNotes>This version is based on Net Standard 2.0 to be used with .Net Core 2.x and above</PackageReleaseNotes>
+    <AssemblyVersion>2.0.1.0</AssemblyVersion>
+    <FileVersion>2.0.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
