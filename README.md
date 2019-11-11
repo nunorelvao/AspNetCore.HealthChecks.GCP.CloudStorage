@@ -11,12 +11,12 @@ more info at:
 Install-Package AspNetCore.HealthChecks.GCP.CloudStorage
 ```
 
->SAMPLE CODE
+>SAMPLE CODE USING DEFAULT GOOGLE CREDENTIALS ENV VARIABLE
 ```csharp
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddHealthChecks()
-       .AddGCPCloudStorage(
+       .AddGcpCloudStorage(
             projectId: "myprojectid",
             bucket: "mybucket (Not mandatory if not provided only projectid will me targeted to be monitored",
             name: "myname",
@@ -24,6 +24,25 @@ public void ConfigureServices(IServiceCollection services)
             tags: new string[] { "mytag" });
 }
 ```
+
+>SAMPLE CODE PASSING GOOGLE CREDENTIALS
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+
+var googleCredentialFile = Google.Apis.Auth.OAuth2.GoogleCredential.FromFile("my_credential_cloud_file.json");
+
+    services.AddHealthChecks()
+       .AddGcpCloudStorage(
+            googleCredential: googleCredentialFile
+            projectId: "myprojectid",
+            bucket: "mybucket (Not mandatory if not provided only projectid will me targeted to be monitored",
+            name: "myname",
+            failureStatus: HealthStatus.Degraded,
+            tags: new string[] { "mytag" });
+}
+```
+
 
 >ABOUT THE AUTHOR
 

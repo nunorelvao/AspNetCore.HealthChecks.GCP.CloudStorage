@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Google.Apis.Auth.OAuth2;
@@ -26,7 +27,7 @@ namespace AspNetCore.HealthChecks.GCP.CloudStorage
                 //if (bucket == null)
                 //    throw new ArgumentNullException(nameof(bucket));
                 _projectId = projectId;
-                _bucket = bucket = projectId;
+                _bucket = bucket;
                 _credential = null;
             }
 
@@ -53,28 +54,21 @@ namespace AspNetCore.HealthChecks.GCP.CloudStorage
                 {
                     CreateConnection();
 
-
-                    if (!string.IsNullOrWhiteSpace(_bucket))
+                    try
                     {
-                        var clientBasePath =
-                            _client.ListObjects(_bucket, null, new ListObjectsOptions() { PageSize = 1 });
-                        if (clientBasePath.ToList().Count == 0)
-                        {
-                            throw new Exception("Bucket Read error");
+                        if (!string.IsNullOrWhiteSpace(_bucket))
+                            _client.GetBucket(_bucket);
+                        else
+                            _client.ListBuckets(_projectId).All(p => p.Id != _projectId);
 
-                        }
                     }
-                    else
+                    catch (Google.GoogleApiException ex)
                     {
-                        var clientBasePath =
-                            _client.ListBuckets(_projectId, new ListBucketsOptions() { PageSize = 1 });
 
-                        if (clientBasePath.ToList().Count == 0)
-                        {
-                            throw new Exception("Bucket Read error");
-
-                        }
+                        if (ex.HttpStatusCode == HttpStatusCode.NotFound || ex.HttpStatusCode == HttpStatusCode.BadRequest)
+                            return Task.FromResult<HealthCheckResult>(new HealthCheckResult(context.Registration.FailureStatus, (string)null, ex, (IReadOnlyDictionary<string, object>)null));
                     }
+
 
                     return Task.FromResult<HealthCheckResult>(HealthCheckResult.Healthy((string)null, (IReadOnlyDictionary<string, object>)null));
 
@@ -87,14 +81,7 @@ namespace AspNetCore.HealthChecks.GCP.CloudStorage
 
             private void CreateConnection()
             {
-                if (_credential != null)
-                {
-                    _client = StorageClient.Create(_credential);
-                }
-                else
-                {
-                    _client = StorageClient.Create();
-                }
+                _client = _credential != null ? StorageClient.Create(_credential) : StorageClient.Create();
             }
         }
     }

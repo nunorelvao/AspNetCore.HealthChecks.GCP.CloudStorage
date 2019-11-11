@@ -14,13 +14,14 @@ More information on the parent project at:
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>Licence.txt</PackageLicenseFile>
     <PackageId>AspNetCore.HealthChecks.GCP.CloudStorage</PackageId>
-    <Version>2.0.0</Version>
+    <Version>2.0.3</Version>
     <Authors>Nuno Relvao</Authors>
     <Company>Nuno Relvao</Company>
     <Product>AspNetCore.HealthChecks.GCP.CloudStorage</Product>
-    <PackageReleaseNotes>This version is based on Net Standard 2.0 to be used with .Net Core 2.x and above</PackageReleaseNotes>
-    <AssemblyVersion>2.0.1.0</AssemblyVersion>
-    <FileVersion>2.0.1.0</FileVersion>
+    <PackageReleaseNotes>This version is based on Net Standard 2.0 to be used with .Net Core 2.x and above
+-Update on a new contructor overload to take the Google Credentials</PackageReleaseNotes>
+    <AssemblyVersion>2.0.3.0</AssemblyVersion>
+    <FileVersion>2.0.3.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
