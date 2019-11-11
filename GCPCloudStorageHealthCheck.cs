@@ -53,16 +53,27 @@ namespace AspNetCore.HealthChecks.GCP.CloudStorage
                 {
                     CreateConnection();
 
-                    Google.Api.Gax.PagedEnumerable<Google.Apis.Storage.v1.Data.Buckets, Google.Apis.Storage.v1.Data.Bucket> clientBasePath;
+
                     if (!string.IsNullOrWhiteSpace(_bucket))
-                        clientBasePath = _client.ListBuckets(_projectId, new ListBucketsOptions() { Prefix = _bucket });
-                    else
-                        clientBasePath = _client.ListBuckets(_projectId);
-
-                    if (clientBasePath.ToList().Count == 0)
                     {
-                        throw new Exception("Bucket Read error");
+                        var clientBasePath =
+                            _client.ListObjects(_bucket, null, new ListObjectsOptions() { PageSize = 1 });
+                        if (clientBasePath.ToList().Count == 0)
+                        {
+                            throw new Exception("Bucket Read error");
 
+                        }
+                    }
+                    else
+                    {
+                        var clientBasePath =
+                            _client.ListBuckets(_projectId, new ListBucketsOptions() { PageSize = 1 });
+
+                        if (clientBasePath.ToList().Count == 0)
+                        {
+                            throw new Exception("Bucket Read error");
+
+                        }
                     }
 
                     return Task.FromResult<HealthCheckResult>(HealthCheckResult.Healthy((string)null, (IReadOnlyDictionary<string, object>)null));
