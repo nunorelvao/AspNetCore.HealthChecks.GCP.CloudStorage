@@ -8,7 +8,7 @@ more info at:
 
 >NUGET INSTALL
 ``` PowerShell
-Install-Package AspNetCore.HealthChecks.System
+Install-Package AspNetCore.HealthChecks.GCP.CloudStorage
 ```
 
 >SAMPLE CODE
