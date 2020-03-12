@@ -23,9 +23,10 @@ namespace Tests
                 {
                     setup.ProjectId = Guid.NewGuid().ToString();
                     setup.Bucket = "mybucket";
-                    setup.GoogleCredential = GoogleCredential.GetApplicationDefault();
+                    setup.GoogleCredential = GoogleCredential.FromAccessToken("xxxxxxxxx");
+
                     //OTHER WAYS TO AUTHENTICATE
-                    //setup.GoogleCredential = GoogleCredential.FromAccessToken("xxxxxxxxx");
+                    //setup.GoogleCredential = GoogleCredential.GetApplicationDefault();
                     //setup.GoogleCredential = GoogleCredential.FromComputeCredential(new ComputeCredential());
                     //setup.GoogleCredential = GoogleCredential.FromServiceAccountCredential(new ServiceAccountCredential(null));
                     //setup.GoogleCredential = GoogleCredential.FromFile("./path");
@@ -52,9 +53,10 @@ namespace Tests
                 {
                     setup.ProjectId = Guid.NewGuid().ToString();
                     setup.Bucket = "mybucket";
-                    setup.GoogleCredential = GoogleCredential.GetApplicationDefault();
+                    setup.GoogleCredential = GoogleCredential.FromAccessToken("xxxxxxxxx");
+
                     //OTHER WAYS TO AUTHENTICATE
-                    //setup.GoogleCredential = GoogleCredential.FromAccessToken("xxxxxxxxx");
+                    //setup.GoogleCredential = GoogleCredential.GetApplicationDefault();
                     //setup.GoogleCredential = GoogleCredential.FromComputeCredential(new ComputeCredential());
                     //setup.GoogleCredential = GoogleCredential.FromServiceAccountCredential(new ServiceAccountCredential(null));
                     //setup.GoogleCredential = GoogleCredential.FromFile("./path");
