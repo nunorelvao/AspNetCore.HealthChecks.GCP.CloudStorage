@@ -11,8 +11,9 @@ more info at:
 Install-Package AspNetCore.HealthChecks.GCP.CloudStorage
 ```
 
->SAMPLE CODE USING DEFAULT GOOGLE CREDENTIALS ENV VARIABLE
+>SAMPLE CODE USING DEFAULT GOOGLE CREDENTIALS ENV VARIABLE AND ONLY PROJECTID
 ```csharp
+//OLD VERSION  (2.0.5 AND DOWN)
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddHealthChecks()
@@ -22,24 +23,59 @@ public void ConfigureServices(IServiceCollection services)
             name: "myname",
             failureStatus: HealthStatus.Degraded,
             tags: new string[] { "mytag" });
+
+//NEW VERSION (2.0.6 and UP)
+ services.AddHealthChecks()
+    .AddGcpCloudStorage(setup =>
+        {
+            setup.ProjectId = "projectId";
+            setup.Bucket = null;
+            setup.GoogleCredential = GoogleCredential.GetApplicationDefault();
+            //OTHER WAYS TO AUTHENTICATE
+            //setup.GoogleCredential = GoogleCredential.GetApplicationDefault();no
+            //setup.GoogleCredential = GoogleCredential.FromComputeCredential(new ComputeCredential());
+            //setup.GoogleCredential = GoogleCredential.FromServiceAccountCredential(new ServiceAccountCredential(null));
+            //setup.GoogleCredential = GoogleCredential.FromFile("./path/tojsonfile.json");
+            //setup.GoogleCredential = GoogleCredential.FromJson("jsonstring");
+            //setup.GoogleCredential = GoogleCredential.FromStream(Stream.Null);
+        }, name: "my-cloud-storage-group", null, new string[] { "cloudstoragehc" });
 }
 ```
 
->SAMPLE CODE PASSING GOOGLE CREDENTIALS
+>SAMPLE CODE PASSING GOOGLE CREDENTIALS AND A SPECIFIC BUCKET
 ```csharp
+//OLD VERSION  (2.0.5 AND DOWN)
 public void ConfigureServices(IServiceCollection services)
 {
 
-var googleCredentialFile = Google.Apis.Auth.OAuth2.GoogleCredential.FromFile("my_credential_cloud_file.json");
+    var googleCredentialFile = Google.Apis.Auth.OAuth2.GoogleCredential.FromFile("my_credential_cloud_file.json");
 
-    services.AddHealthChecks()
-       .AddGcpCloudStorage(
-            googleCredential: googleCredentialFile
-            projectId: "myprojectid",
-            bucket: "mybucket (Not mandatory if not provided only projectid will me targeted to be monitored",
-            name: "myname",
-            failureStatus: HealthStatus.Degraded,
-            tags: new string[] { "mytag" });
+        services.AddHealthChecks()
+        .AddGcpCloudStorage(
+                googleCredential: googleCredentialFile
+                projectId: "myprojectid",
+                bucket: "mybucket (Not mandatory if not provided only projectid will me targeted to be monitored",
+                name: "myname",
+                failureStatus: HealthStatus.Degraded,
+                tags: new string[] { "mytag" });
+    }
+
+ //NEW VERSION (2.0.6 and UP)
+ services.AddHealthChecks()
+    .AddGcpCloudStorage(setup =>
+        {
+            setup.ProjectId = "projectId";
+            setup.Bucket = "bucketname";
+            setup.GoogleCredential = GoogleCredential.FromFile("./path/tojsonfile.json");
+            //OTHER WAYS TO AUTHENTICATE
+            //setup.GoogleCredential = GoogleCredential.GetApplicationDefault();no
+            //setup.GoogleCredential = GoogleCredential.FromComputeCredential(new ComputeCredential());
+            //setup.GoogleCredential = GoogleCredential.FromServiceAccountCredential(new ServiceAccountCredential(null));
+            //setup.GoogleCredential = GoogleCredential.FromFile("./path/tojsonfile.json");
+            //setup.GoogleCredential = GoogleCredential.FromJson("jsonstring");
+            //setup.GoogleCredential = GoogleCredential.FromStream(Stream.Null);
+        }, name: "my-cloud-storage-group", null, new string[] { "cloudstoragehc" });
+
 }
 ```
 
