@@ -10,7 +10,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{C870EADA
 		build\dependencies.props = build\dependencies.props
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{2DA05B4B-C05E-4DE3-A34D-AA6D553A7D00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{2DA05B4B-C05E-4DE3-A34D-AA6D553A7D00}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunctionalTests", "FunctionalTests\FunctionalTests.csproj", "{44D94F4F-541A-4BE5-89C1-E99C72BEA5DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{2DA05B4B-C05E-4DE3-A34D-AA6D553A7D00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DA05B4B-C05E-4DE3-A34D-AA6D553A7D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DA05B4B-C05E-4DE3-A34D-AA6D553A7D00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44D94F4F-541A-4BE5-89C1-E99C72BEA5DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44D94F4F-541A-4BE5-89C1-E99C72BEA5DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44D94F4F-541A-4BE5-89C1-E99C72BEA5DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44D94F4F-541A-4BE5-89C1-E99C72BEA5DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

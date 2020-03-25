@@ -1,0 +1,60 @@
+name: Unit Test & Functional Tests
+
+on:
+  push:
+    branches:
+      - master
+  
+jobs:
+  testandbuild:
+
+    runs-on: ubuntu-latest
+    ### IF NEED TO RUN ALL ON SAME CONTAINER SERVICES WILL BE REACHABLE BY DNS OF ITS SERVICE NAME eg: fakegcloudserver, aplpine, busybox, etc...
+    ### IF NOT DEFINED WILL BE REACHABLE BY  localhost:PORT
+    #container: mcr.microsoft.com/dotnet/core/sdk:2.2
+    
+    # services:      
+          
+      # fakegcloudserver:
+        # image: "fsouza/fake-gcs-server"
+        # ports:
+          # - "4443:4443"
+        # volumes:
+          # - ./FunctionalTests/TestBuckets:/data
+        #env:
+          #XXXX: xxx        
+  
+    steps:
+    
+      #NEEED TO CHECKOUT ALL REPO ON CONTAINER TO  DO ANYTHNG WITH ITS FILES EG AS CASE BELOW LAUCHING DOCKER COMPOSE
+      - name: Checkout Repo to local runner        
+        uses: actions/checkout@v2        
+        
+      - name: Export github.workspace to PROJECT_PATH      
+        run: echo ::set-env name=PROJECT_PATH::$GITHUB_WORKSPACE   
+
+      - name: echo GitHub Workspace Directly       
+        run:  echo ${{github.workspace}}        
+        
+      - name: echo GitHub Workspace From PROJECT_PATH    
+        run:  echo ${{env.PROJECT_PATH}}
+                                    
+      - name: Test        
+        run: dotnet test
+        env:
+          GCP_STORAGE_SA_CRED: ${{secrets.GCP_STORAGE_SA_CRED}} 
+                                  
+      ### PUSH DISPATCH EVENT OT ALLOW OTHER WORKFLOW TO RUN
+      - name: Create issue using REST API
+        run: |
+            curl --request POST \
+                --url https://api.github.com/repos/${{ github.repository }}/dispatches \
+                --header 'authorization: Bearer ${{ secrets.REPO_TOKEN_EVENTS }}' \
+                --header 'content-type: application/json' \
+                --data '{
+                  "event_type": "testandbuildcomplete",
+                  "client_payload": {
+                    "unit": false,
+                    "integration": true 
+                    } 
+                  }'
