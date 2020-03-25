@@ -3,6 +3,8 @@ name: Pack&Publish nuget on new version
 on:
   repository_dispatch:
     types: testandbuildcomplete
+  push:
+    branches: [ master ]
     
 jobs:
   publish:
