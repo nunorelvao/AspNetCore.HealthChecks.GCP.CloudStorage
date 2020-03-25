@@ -40,6 +40,7 @@ namespace FunctionalTests
         {
             _testOutputHelper = testOutputHelper;
             jsonCredTest = Environment.GetEnvironmentVariable("GCP_STORAGE_SA_CRED");
+            Console.WriteLine("RUNNING FUNCTIONAL TEST");
         }
 
         [Fact]
