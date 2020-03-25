@@ -52,7 +52,7 @@ jobs:
                 --header 'authorization: Bearer ${{ secrets.REPO_TOKEN_EVENTS }}' \
                 --header 'content-type: application/json' \
                 --data '{
-                  "event_type": "testandbuildcomplete",
+                  "event_type": "runpackcloudstoragehc",
                   "client_payload": {
                     "unit": false,
                     "integration": true 
